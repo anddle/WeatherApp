@@ -10,14 +10,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="244dp"
-        android:background="#FFFF0000">
+        android:background="#3F51B5"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/ic_sunny_cloudy_l"
+                android:scaleType="center"/>
+
+            <LinearLayout
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23°"
+                    android:textColor="#b3ffffff"
+                    android:textSize="56sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="17℃～25℃"
+                    android:textColor="#ffffffff"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:text="成都"
+                android:textColor="#ffffffff"
+                android:textSize="34sp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#FF00FF00">
+        android:layout_height="100dp">
 
     </LinearLayout>
 
@@ -29,8 +82,7 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FF0000FF">
+        android:layout_height="match_parent">
 
     </ListView>
 
