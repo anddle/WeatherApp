@@ -70,7 +70,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <include layout="@layout/forcast_item" />
+        <include layout="@layout/forcast_item" />
+        <include layout="@layout/forcast_item" />
+        <include layout="@layout/forcast_item" />
+        <include layout="@layout/forcast_item" />
 
     </LinearLayout>
 
