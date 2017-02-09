@@ -7,6 +7,7 @@
     android:layout_weight="1">
 
     <TextView
+        android:id="@+id/forcast_date"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -16,12 +17,14 @@
         android:gravity="center"/>
 
     <ImageView
+        android:id="@+id/forcast_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_sunny_cloudy_s"
         android:scaleType="center"/>
 
     <TextView
+        android:id="@+id/forcast_temperature"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
