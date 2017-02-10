@@ -70,14 +70,23 @@ public class MainActivity extends AppCompatActivity {
         mWeatherMoreInfoListView.setAdapter(adapter);
 
         try {
+            Log.d("TEST","start to parse JSON content");
+
             JSONObject weatherResult = new JSONObject(FAKE_DATA);
             int errorCode = weatherResult.getInt("error_code");
+            Log.d("TEST", "error_code = " + errorCode);
             if(errorCode == 0) {
                 JSONObject data = weatherResult.getJSONObject("data");
                 String location = data.getString("location");
                 String temperature = data.getString("temperature");
                 String temperatureRange = data.getString("temperature_range");
                 int weatherCode = data.getInt("weather_code");
+
+                Log.d("TEST","weather detail info:"+
+                        " location = " + location +
+                        " temperature = " + temperature +
+                        " temperatureRange = " + temperatureRange +
+                        " weatherCode = " + weatherCode);
 
                 JSONArray forcast = data.getJSONArray("forcast");
                 for(int i = 0; i < forcast.length(); i++) {
@@ -86,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
                     String forcastTemperatureRange = forcastItem.getString("temperature_range");
                     int forcastWeatherCode = forcastItem.getInt("weather_code");
 
+                    Log.d("TEST","weather forcast info:"+
+                            " date = " + date +
+                            " forcastTemperatureRange = " + forcastTemperatureRange +
+                            " forcastWeatherCode = " + forcastWeatherCode);
                 }
 
                 String windDirection = data.getString("wind_direction");
@@ -94,12 +107,23 @@ public class MainActivity extends AppCompatActivity {
                 String airQuality = data.getString("air_quality");
                 String sportLevel = data.getString("sport_level");
                 String ultravioletRay = data.getString("ultraviolet_ray");
+
+                Log.d("TEST","more weather info:"+
+                        " windDirection = " + windDirection +
+                        " windLevel = " + windLevel +
+                        " humidityLevel = " + humidityLevel +
+                        " airQuality = " + airQuality +
+                        " sportLevel = " + sportLevel +
+                        " ultravioletRay = " + ultravioletRay );
+
+                Log.d("TEST","finish to parse JSON content");
             }
             else {
 
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("TEST","fail to parse JSON content");
         }
 
     }
