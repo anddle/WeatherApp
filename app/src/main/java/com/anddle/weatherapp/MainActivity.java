@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,49 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mWeatherMoreInfoListView;
     private List<WeatherMoreInfo> mWeatherMoreInfoList;
+
+    private final String FAKE_DATA= "{\n" +
+            "    \"error_code\": \"0\",\n" +
+            "    \"data\": {\n" +
+            "        \"location\": \"成都\",\n" +
+            "        \"temperature\": \"23°\",\n" +
+            "        \"temperature_range\": \"18℃~23℃\",\n" +
+            "        \"weather_code\": \"5\",\n" +
+            "        \"wind_direction\": \"东南\",\n" +
+            "        \"wind_level\": \"1级\",\n" +
+            "        \"humidity_level\": \"30%\",\n" +
+            "        \"air_quality\": \"良\",\n" +
+            "        \"sport_level\": \"适宜\",\n" +
+            "        \"ultraviolet_ray\": \"弱\",\n" +
+            "        \"forcast\": [\n" +
+            "            {\n" +
+            "                \"date\": \"明天\",\n" +
+            "                \"temperature_range\": \"18℃~23℃\",\n" +
+            "                \"weather_code\": \"0\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"date\": \"星期六\",\n" +
+            "                \"temperature_range\": \"17℃~21℃\",\n" +
+            "                \"weather_code\": \"1\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"date\": \"星期日\",\n" +
+            "                \"temperature_range\": \"19℃~24℃\",\n" +
+            "                \"weather_code\": \"3\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"date\": \"星期一\",\n" +
+            "                \"temperature_range\": \"16℃~22℃\",\n" +
+            "                \"weather_code\": \"4\"\n" +
+            "            },\n" +
+            "            {\n" +
+            "                \"date\": \"星期二\",\n" +
+            "                \"temperature_range\": \"20℃~26℃\",\n" +
+            "                \"weather_code\": \"2\"\n" +
+            "            }\n" +
+            "        ]\n" +
+            "    }\n" +
+            "}";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,43 +69,38 @@ public class MainActivity extends AppCompatActivity {
         WeatherMoreInfoAdapter adapter = new WeatherMoreInfoAdapter(MainActivity.this, R.layout.weather_more_info_item_layout, mWeatherMoreInfoList);
         mWeatherMoreInfoListView.setAdapter(adapter);
 
-        WeatherMoreInfo data1 = new WeatherMoreInfo();
-        data1.typeResId = R.mipmap.ic_wind_level;
-        data1.description = "风力";
-        data1.value = "3级";
-        mWeatherMoreInfoList.add(data1);
+        try {
+            JSONObject weatherResult = new JSONObject(FAKE_DATA);
+            int errorCode = weatherResult.getInt("error_code");
+            if(errorCode == 0) {
+                JSONObject data = weatherResult.getJSONObject("data");
+                String location = data.getString("location");
+                String temperature = data.getString("temperature");
+                String temperatureRange = data.getString("temperature_range");
+                int weatherCode = data.getInt("weather_code");
 
-        WeatherMoreInfo data2 = new WeatherMoreInfo();
-        data2.typeResId = R.mipmap.ic_wind_direction;
-        data2.description = "风向";
-        data2.value = "东南";
-        mWeatherMoreInfoList.add(data2);
+                JSONArray forcast = data.getJSONArray("forcast");
+                for(int i = 0; i < forcast.length(); i++) {
+                    JSONObject forcastItem = forcast.getJSONObject(i);
+                    String date = forcastItem.getString("date");
+                    String forcastTemperatureRange = forcastItem.getString("temperature_range");
+                    int forcastWeatherCode = forcastItem.getInt("weather_code");
 
-        WeatherMoreInfo data3 = new WeatherMoreInfo();
-        data3.typeResId = R.mipmap.ic_humidity_level;
-        data3.description = "湿度";
-        data3.value = "60%";
-        mWeatherMoreInfoList.add(data3);
+                }
 
-        WeatherMoreInfo data4 = new WeatherMoreInfo();
-        data4.typeResId = R.mipmap.ic_air_quality;
-        data4.description = "空气质量";
-        data4.value = "重污染";
-        mWeatherMoreInfoList.add(data4);
+                String windDirection = data.getString("wind_direction");
+                String windLevel = data.getString("wind_level");
+                String humidityLevel = data.getString("humidity_level");
+                String airQuality = data.getString("air_quality");
+                String sportLevel = data.getString("sport_level");
+                String ultravioletRay = data.getString("ultraviolet_ray");
+            }
+            else {
 
-        WeatherMoreInfo data5 = new WeatherMoreInfo();
-        data5.typeResId = R.mipmap.ic_sport_level;
-        data5.description = "运动";
-        data5.value = "不合适";
-        mWeatherMoreInfoList.add(data5);
-
-        WeatherMoreInfo data6 = new WeatherMoreInfo();
-        data6.typeResId = R.mipmap.ic_ultraviolet_level;
-        data6.description = "紫外线";
-        data6.value = "强";
-        mWeatherMoreInfoList.add(data6);
-
-        adapter.notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }
