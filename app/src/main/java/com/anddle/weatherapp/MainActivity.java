@@ -234,9 +234,11 @@ public class MainActivity extends AppCompatActivity {
         TextView currentTemperatureView = (TextView) findViewById(R.id.current_temperature);
         TextView temperatureRangeView = (TextView) findViewById(R.id.temperature_range);
         ImageView weatherIcon = (ImageView) findViewById(R.id.weather_icon);
+        TextView weatherLocation = (TextView) findViewById(R.id.weather_location);
 
         currentTemperatureView.setText(temperature);
         temperatureRangeView.setText(temperatureRange);
+        weatherLocation.setText(location);
 
         int iconId = R.mipmap.ic_sunny_cloudy_l;
         switch (weatherCode) {
