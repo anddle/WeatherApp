@@ -1,5 +1,6 @@
 package com.anddle.weatherapp;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,12 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mWeatherMoreInfoListView;
     private List<WeatherMoreInfo> mWeatherMoreInfoList;
+    private UpdateTask mUpdateTask;
 
     private final String FAKE_DATA= "{\n" +
             "    \"error_code\": \"0\",\n" +
@@ -72,86 +80,154 @@ public class MainActivity extends AppCompatActivity {
         WeatherMoreInfoAdapter adapter = new WeatherMoreInfoAdapter(MainActivity.this, R.layout.weather_more_info_item_layout, mWeatherMoreInfoList);
         mWeatherMoreInfoListView.setAdapter(adapter);
 
-        try {
-            Log.d("TEST","start to parse JSON content");
+        mUpdateTask = new UpdateTask();
+        mUpdateTask.execute();
 
-            JSONObject weatherResult = new JSONObject(FAKE_DATA);
-            int errorCode = weatherResult.getInt("error_code");
-            Log.d("TEST", "error_code = " + errorCode);
-            if(errorCode == 0) {
-                JSONObject data = weatherResult.getJSONObject("data");
-                String location = data.getString("location");
-                String temperature = data.getString("temperature");
-                String temperatureRange = data.getString("temperature_range");
-                int weatherCode = data.getInt("weather_code");
+    }
 
-                Log.d("TEST","weather detail info:"+
-                        " location = " + location +
-                        " temperature = " + temperature +
-                        " temperatureRange = " + temperatureRange +
-                        " weatherCode = " + weatherCode);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-                JSONArray forcast = data.getJSONArray("forcast");
-                List<ForcastInfo> forcastInfoList = new ArrayList<>();
-                for(int i = 0; i < forcast.length(); i++) {
-                    JSONObject forcastItem = forcast.getJSONObject(i);
-                    String date = forcastItem.getString("date");
-                    String forcastTemperatureRange = forcastItem.getString("temperature_range");
-                    int forcastWeatherCode = forcastItem.getInt("weather_code");
+        if((mUpdateTask != null) && (mUpdateTask.getStatus() == AsyncTask.Status.RUNNING)) {
+            mUpdateTask.cancel(true);
+        }
 
-                    Log.d("TEST","weather forcast info:"+
-                            " date = " + date +
-                            " forcastTemperatureRange = " + forcastTemperatureRange +
-                            " forcastWeatherCode = " + forcastWeatherCode);
+        mUpdateTask = null;
+    }
 
-                    ForcastInfo forcastInfo = new ForcastInfo(date, forcastTemperatureRange, forcastWeatherCode);
-                    forcastInfoList.add(forcastInfo);
+    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+        private String mLocation;
+        private String mTemperature;
+        private String mTemperatureRange;
+        private int mWeatherCode;
+        private List<ForcastInfo> mForcastList;
+        private List<WeatherMoreInfo> mWeatherMoreInfoList;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            Log.d("TEST","UpdateTask doInBackground - ThreadId = " + Thread.currentThread().getId());
+
+            try {
+
+                URL url = new URL("http://booktest.anddle.com/api/query_weather");
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                byte[] buffer = new byte[2048];
+                int readBytes = 0;
+                StringBuilder stringBuilder = new StringBuilder();
+                while((readBytes = in.read(buffer)) > 0){
+                    stringBuilder.append(new String(buffer, 0, readBytes));
                 }
 
-                String windDirection = data.getString("wind_direction");
-                String windLevel = data.getString("wind_level");
-                String humidityLevel = data.getString("humidity_level");
-                String airQuality = data.getString("air_quality");
-                String sportLevel = data.getString("sport_level");
-                String ultravioletRay = data.getString("ultraviolet_ray");
+                urlConnection.disconnect();
 
-                Log.d("TEST","more weather info:"+
-                        " windDirection = " + windDirection +
-                        " windLevel = " + windLevel +
-                        " humidityLevel = " + humidityLevel +
-                        " airQuality = " + airQuality +
-                        " sportLevel = " + sportLevel +
-                        " ultravioletRay = " + ultravioletRay );
+                String weatherRes = stringBuilder.toString();
 
-                List<WeatherMoreInfo> weatherMoreInfoList = new ArrayList<>();
-                WeatherMoreInfo info1 = new WeatherMoreInfo("wind_direction", windDirection);
-                WeatherMoreInfo info2 = new WeatherMoreInfo("wind_level", windLevel);
-                WeatherMoreInfo info3 = new WeatherMoreInfo("humidity_level", humidityLevel);
-                WeatherMoreInfo info4 = new WeatherMoreInfo("air_quality", airQuality);
-                WeatherMoreInfo info5 = new WeatherMoreInfo("sport_level", sportLevel);
-                WeatherMoreInfo info6 = new WeatherMoreInfo("ultraviolet_ray", ultravioletRay);
-                weatherMoreInfoList.add(info1);
-                weatherMoreInfoList.add(info2);
-                weatherMoreInfoList.add(info3);
-                weatherMoreInfoList.add(info4);
-                weatherMoreInfoList.add(info5);
-                weatherMoreInfoList.add(info6);
+                Log.d("TEST","start to parse JSON content");
 
-                Log.d("TEST","finish to parse JSON content");
+                JSONObject weatherResult = new JSONObject(weatherRes);
+                int errorCode = weatherResult.getInt("error_code");
+                Log.d("TEST", "error_code = " + errorCode);
+                if(errorCode == 0) {
+                    JSONObject data = weatherResult.getJSONObject("data");
+                    mLocation = data.getString("location");
+                    mTemperature = data.getString("temperature");
+                    mTemperatureRange = data.getString("temperature_range");
+                    mWeatherCode = data.getInt("weather_code");
 
-                updateWeatherDetail(location, temperature, temperatureRange, weatherCode);
-                updateWeatherForcast(forcastInfoList);
-                updateWeatherMoreInfo(weatherMoreInfoList);
+                    Log.d("TEST","weather detail info:"+
+                            " location = " + mLocation +
+                            " temperature = " + mTemperature +
+                            " temperatureRange = " + mTemperatureRange +
+                            " weatherCode = " + mWeatherCode);
+
+                    JSONArray forcast = data.getJSONArray("forcast");
+                    mForcastList = new ArrayList<>();
+                    for(int i = 0; i < forcast.length(); i++) {
+                        JSONObject forcastItem = forcast.getJSONObject(i);
+                        String date = forcastItem.getString("date");
+                        String forcastTemperatureRange = forcastItem.getString("temperature_range");
+                        int forcastWeatherCode = forcastItem.getInt("weather_code");
+
+                        Log.d("TEST","weather forcast info:"+
+                                " date = " + date +
+                                " forcastTemperatureRange = " + forcastTemperatureRange +
+                                " forcastWeatherCode = " + forcastWeatherCode);
+
+                        ForcastInfo forcastInfo = new ForcastInfo(date, forcastTemperatureRange, forcastWeatherCode);
+                        mForcastList.add(forcastInfo);
+                    }
+
+                    String windDirection = data.getString("wind_direction");
+                    String windLevel = data.getString("wind_level");
+                    String humidityLevel = data.getString("humidity_level");
+                    String airQuality = data.getString("air_quality");
+                    String sportLevel = data.getString("sport_level");
+                    String ultravioletRay = data.getString("ultraviolet_ray");
+
+                    Log.d("TEST","more weather info:"+
+                            " windDirection = " + windDirection +
+                            " windLevel = " + windLevel +
+                            " humidityLevel = " + humidityLevel +
+                            " airQuality = " + airQuality +
+                            " sportLevel = " + sportLevel +
+                            " ultravioletRay = " + ultravioletRay );
+
+                    mWeatherMoreInfoList = new ArrayList<>();
+                    WeatherMoreInfo info1 = new WeatherMoreInfo("wind_direction", windDirection);
+                    WeatherMoreInfo info2 = new WeatherMoreInfo("wind_level", windLevel);
+                    WeatherMoreInfo info3 = new WeatherMoreInfo("humidity_level", humidityLevel);
+                    WeatherMoreInfo info4 = new WeatherMoreInfo("air_quality", airQuality);
+                    WeatherMoreInfo info5 = new WeatherMoreInfo("sport_level", sportLevel);
+                    WeatherMoreInfo info6 = new WeatherMoreInfo("ultraviolet_ray", ultravioletRay);
+                    mWeatherMoreInfoList.add(info1);
+                    mWeatherMoreInfoList.add(info2);
+                    mWeatherMoreInfoList.add(info3);
+                    mWeatherMoreInfoList.add(info4);
+                    mWeatherMoreInfoList.add(info5);
+                    mWeatherMoreInfoList.add(info6);
+
+                    Log.d("TEST","finish to parse JSON content");
+
+
+                }
+                else {
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("TEST","fail to parse JSON content");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            else {
 
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.d("TEST","fail to parse JSON content");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            Log.d("TEST","UpdateTask onPostExecute - ThreadId = " + Thread.currentThread().getId());
+
+            updateWeatherDetail(mLocation, mTemperature, mTemperatureRange, mWeatherCode);
+            updateWeatherForcast(mForcastList);
+            updateWeatherMoreInfo(mWeatherMoreInfoList);
+        }
+
+        @Override
+        protected void onCancelled() {
+
         }
 
     }
+
 
     private void updateWeatherDetail(String location, String temperature, String temperatureRange, int weatherCode) {
 
