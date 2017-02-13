@@ -11,9 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="明天"
-        android:textColor="#DE000000"
-        android:textSize="14sp"
+        android:text="@string/date_none"
+        android:textAppearance="@style/WeatherForcastDateStyle"
         android:gravity="center"/>
 
     <ImageView
@@ -28,9 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="17℃～25℃"
-        android:textColor="#8a000000"
-        android:textSize="12sp"
+        android:text="@string/temperature_range_none"
+        android:textAppearance="@style/WeatherForcastTemperatureRangeStyle"
         android:gravity="center"/>
 
 </LinearLayout>

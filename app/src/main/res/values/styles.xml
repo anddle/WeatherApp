@@ -8,4 +8,39 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="WeatherDetailCurrentTemperatureStyle">
+        <item name="android:textColor">@color/colorWhiteDarkText</item>
+        <item name="android:textSize">56sp</item>
+    </style>
+
+    <style name="WeatherDetailTemperatureRangeStyle">
+        <item name="android:textColor">@color/colorWhiteLightText</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="WeatherDetailLocationStyle">
+        <item name="android:textColor">@color/colorWhiteLightText</item>
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="WeatherForcastDateStyle">
+        <item name="android:textColor">@color/colorBlackDarkText</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="WeatherForcastTemperatureRangeStyle">
+        <item name="android:textColor">@color/colorBlackLightText</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="WeatherMoreInfoDescriptionStyle">
+        <item name="android:textColor">@color/colorBlackDarkText</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="WeatherMoreInfoValueStyle">
+        <item name="android:textColor">@color/colorBlackLightText</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

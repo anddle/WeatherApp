@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="current_temperature_none">--°</string>
+    <string name="temperature_range_none">-℃～-℃</string>
+    <string name="location_none">--</string>
+    <string name="date_none">---</string>
+
+    <string name="wind_direction">Wind Direction</string>
+    <string name="wind_level">Wind Level</string>
+    <string name="humidity_level">Humidity</string>
+    <string name="air_quality">Air Quality</string>
+    <string name="sport">Sport</string>
+    <string name="ultraviolet_level">Ultraviolet</string>
 </resources>

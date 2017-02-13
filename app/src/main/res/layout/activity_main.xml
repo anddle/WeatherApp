@@ -38,17 +38,15 @@
                     android:id="@+id/current_temperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23°"
-                    android:textColor="#b3ffffff"
-                    android:textSize="56sp"/>
+                    android:text="@string/current_temperature_none"
+                    android:textAppearance="@style/WeatherDetailCurrentTemperatureStyle"/>
 
                 <TextView
                     android:id="@+id/temperature_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="17℃～25℃"
-                    android:textColor="#ffffffff"
-                    android:textSize="24sp"/>
+                    android:text="@string/temperature_range_none"
+                    android:textAppearance="@style/WeatherDetailTemperatureRangeStyle"/>
 
             </LinearLayout>
 
@@ -64,9 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:text="成都"
-                android:textColor="#ffffffff"
-                android:textSize="34sp"/>
+                android:text="@string/location_none"
+                android:textAppearance="@style/WeatherDetailLocationStyle"/>
 
         </LinearLayout>
 
@@ -74,10 +71,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/forcast_height"
         android:orientation="horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginLeft="@dimen/forcast_margin"
+        android:layout_marginRight="@dimen/forcast_margin">
 
         <include layout="@layout/forcast_item" android:id="@+id/forcast_item1" />
         <include layout="@layout/forcast_item" android:id="@+id/forcast_item2" />
@@ -89,7 +86,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="@dimen/gap_height"
         android:background="#1F000000"
         />
 

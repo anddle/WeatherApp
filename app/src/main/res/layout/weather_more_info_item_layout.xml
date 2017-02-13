@@ -10,26 +10,22 @@
         android:src="@mipmap/ic_air_quality"
         android:scaleType="center"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="@dimen/list_icon_left_margin"/>
 
     <TextView
         android:id="@+id/weather_more_info_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="湿度"
-        android:layout_marginLeft="72dp"
+        android:layout_marginLeft="@dimen/list_text_left_margin"
         android:layout_gravity="center_vertical"
-        android:textSize="16sp"
-        android:textColor= "#DE000000" />
+        android:textAppearance="@style/WeatherMoreInfoDescriptionStyle" />
 
     <TextView
         android:id="@+id/weather_more_info_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="30%"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="@dimen/list_text_right_margin"
         android:layout_gravity="center_vertical|right"
-        android:textSize="14sp"
-        android:textColor= "#8A000000"/>
+        android:textAppearance="@style/WeatherMoreInfoValueStyle"/>
 
 </FrameLayout>
