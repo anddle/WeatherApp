@@ -3,7 +3,7 @@ package com.anddle.weatherapp;
 public class WeatherMoreInfo {
 
     public int typeResId = 0;
-    public String description;
+    public int description;
     public String value = "";
 
     public WeatherMoreInfo(String keyword, String value) {
@@ -12,32 +12,32 @@ public class WeatherMoreInfo {
         switch (keyword) {
             case "wind_direction":
                 this.typeResId = R.mipmap.ic_wind_direction;
-                this.description = "风向";
+                this.description = R.string.wind_direction;
                 break;
 
             case "wind_level":
                 this.typeResId = R.mipmap.ic_wind_level;
-                this.description = "风力";
+                this.description = R.string.wind_level;
                 break;
 
             case "humidity_level":
                 this.typeResId = R.mipmap.ic_humidity_level;
-                this.description = "湿度";
+                this.description = R.string.humidity_level;
                 break;
 
             case "air_quality":
                 this.typeResId = R.mipmap.ic_air_quality;
-                this.description = "空气质量";
+                this.description = R.string.air_quality;
                 break;
 
             case "sport_level":
                 this.typeResId = R.mipmap.ic_sport_level;
-                this.description = "运动";
+                this.description = R.string.sport;
                 break;
 
             case "ultraviolet_ray":
                 this.typeResId = R.mipmap.ic_ultraviolet_level;
-                this.description = "紫外线";
+                this.description = R.string.ultraviolet_level;
                 break;
 
         }
