@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
-                URL url = new URL("http://booktest.anddle.com/api/query_weather");
+                URL url = new URL("http://book.anddle.com/api/query_weather");
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
