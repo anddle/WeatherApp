@@ -96,12 +96,12 @@
                 android:background="#1F000000"
                 />
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/weather_more_info_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            </ListView>
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 

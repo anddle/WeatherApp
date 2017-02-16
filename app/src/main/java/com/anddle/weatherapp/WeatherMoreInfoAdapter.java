@@ -1,45 +1,57 @@
 package com.anddle.weatherapp;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-public class WeatherMoreInfoAdapter extends ArrayAdapter<WeatherMoreInfo> {
+public class WeatherMoreInfoAdapter extends RecyclerView.Adapter {
 
-    private final LayoutInflater mInflater;
-    private final int mResource;
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-    public WeatherMoreInfoAdapter(Context context, int resource, List<WeatherMoreInfo> objects) {
-        super(context, resource, objects);
+        public ImageView icon;
+        public TextView description;
+        public TextView value;
 
-        mInflater = LayoutInflater.from(context);
-        mResource = resource;
+        public ViewHolder(View v) {
+            super(v);
+
+            this.icon = (ImageView) v.findViewById(R.id.weather_more_info_icon);
+            this.description = (TextView) v.findViewById(R.id.weather_more_info_description);
+            this.value = (TextView) v.findViewById(R.id.weather_more_info_value);
+        }
+    }
+
+    private List<WeatherMoreInfo> mData;
+
+    public WeatherMoreInfoAdapter(List<WeatherMoreInfo> data) {
+        this.mData = data;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.weather_more_info_item_layout, parent, false);
 
-        if (convertView == null) {
-            convertView = mInflater.inflate(mResource, parent, false);
-        }
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
+    }
 
-        WeatherMoreInfo item = getItem(position);
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ImageView icon = (ImageView) convertView.findViewById(R.id.weather_more_info_icon);
-        icon.setImageResource(item.typeResId);
+        WeatherMoreInfo info = mData.get(position);
+        ViewHolder viewHolder = (ViewHolder) holder;
+        viewHolder.icon.setImageResource(info.typeResId);
+        viewHolder.description.setText(info.description);
+        viewHolder.value.setText(info.value);
+    }
 
-        TextView description = (TextView) convertView.findViewById(R.id.weather_more_info_description);
-        description.setText(item.description);
-
-        TextView value = (TextView) convertView.findViewById(R.id.weather_more_info_value);
-        value.setText(item.value);
-
-        return convertView;
-
+    @Override
+    public int getItemCount() {
+        return mData.size();
     }
 }

@@ -4,11 +4,12 @@ import android.os.AsyncTask;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView mWeatherMoreInfoListView;
+    private RecyclerView mWeatherMoreInfoListView;
     private List<WeatherMoreInfo> mWeatherMoreInfoList;
     private UpdateTask mUpdateTask;
 
@@ -37,9 +38,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_toolbar);
         setSupportActionBar(toolbar);
 
-        mWeatherMoreInfoListView = (ListView) findViewById(R.id.weather_more_info_list);
+        mWeatherMoreInfoListView = (RecyclerView) findViewById(R.id.weather_more_info_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        mWeatherMoreInfoListView.setLayoutManager(layoutManager);
+
         mWeatherMoreInfoList = new ArrayList<>();
-        WeatherMoreInfoAdapter adapter = new WeatherMoreInfoAdapter(MainActivity.this, R.layout.weather_more_info_item_layout, mWeatherMoreInfoList);
+        WeatherMoreInfoAdapter adapter = new WeatherMoreInfoAdapter(mWeatherMoreInfoList);
         mWeatherMoreInfoListView.setAdapter(adapter);
 
         mUpdateTask = new UpdateTask();
