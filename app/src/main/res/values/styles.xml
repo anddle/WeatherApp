@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="WeatherDetailCurrentTemperatureStyle">
         <item name="android:textColor">@color/colorWhiteDarkText</item>
         <item name="android:textSize">56sp</item>

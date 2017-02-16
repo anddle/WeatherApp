@@ -1,100 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.anddle.weatherapp.MainActivity">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="244dp"
-        android:background="#3F51B5"
-        android:orientation="vertical">
+        android:layout_height="300dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/weather_icon"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:src="@mipmap/ic_sunny_cloudy_l"
-                android:scaleType="center"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/app_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"/>
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_marginTop="80dp"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/current_temperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/current_temperature_none"
-                    android:textAppearance="@style/WeatherDetailCurrentTemperatureStyle"/>
+                <ImageView
+                    android:id="@+id/weather_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/ic_sunny_cloudy_l"
+                    android:scaleType="center"/>
 
-                <TextView
-                    android:id="@+id/temperature_range"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/temperature_range_none"
-                    android:textAppearance="@style/WeatherDetailTemperatureRangeStyle"/>
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/current_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/current_temperature_none"
+                        android:textAppearance="@style/WeatherDetailCurrentTemperatureStyle"/>
+
+                    <TextView
+                        android:id="@+id/temperature_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temperature_range_none"
+                        android:textAppearance="@style/WeatherDetailTemperatureRangeStyle"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/weather_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:text="@string/location_none"
-                android:textAppearance="@style/WeatherDetailLocationStyle"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/forcast_height"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/forcast_margin"
+                android:layout_marginRight="@dimen/forcast_margin">
+
+                <include layout="@layout/forcast_item" android:id="@+id/forcast_item1" />
+                <include layout="@layout/forcast_item" android:id="@+id/forcast_item2" />
+                <include layout="@layout/forcast_item" android:id="@+id/forcast_item3" />
+                <include layout="@layout/forcast_item" android:id="@+id/forcast_item4" />
+                <include layout="@layout/forcast_item" android:id="@+id/forcast_item5" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gap_height"
+                android:background="#1F000000"
+                />
+
+            <ListView
+                android:id="@+id/weather_more_info_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/forcast_height"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/forcast_margin"
-        android:layout_marginRight="@dimen/forcast_margin">
-
-        <include layout="@layout/forcast_item" android:id="@+id/forcast_item1" />
-        <include layout="@layout/forcast_item" android:id="@+id/forcast_item2" />
-        <include layout="@layout/forcast_item" android:id="@+id/forcast_item3" />
-        <include layout="@layout/forcast_item" android:id="@+id/forcast_item4" />
-        <include layout="@layout/forcast_item" android:id="@+id/forcast_item5" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/gap_height"
-        android:background="#1F000000"
-        />
-
-    <ListView
-        android:id="@+id/weather_more_info_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ListView>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
