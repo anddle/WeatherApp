@@ -8,4 +8,5 @@
     <string name="air_quality">空气质量</string>
     <string name="sport">运动</string>
     <string name="ultraviolet_level">紫外线</string>
+    <string name="load_weather_info_fail">天气信息获取失败！</string>
 </resources>

@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TEST","UpdateTask onPostExecute - ThreadId = " + Thread.currentThread().getId());
 
             if(data.errorCode != 0) {
-                Snackbar.make(findViewById(R.id.root_view), "Error!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(R.id.root_view), R.string.load_weather_info_fail, Snackbar.LENGTH_LONG).show();
                 return;
             }
 

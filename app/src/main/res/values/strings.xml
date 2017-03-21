@@ -11,4 +11,5 @@
     <string name="air_quality">Air Quality</string>
     <string name="sport">Sport</string>
     <string name="ultraviolet_level">Ultraviolet</string>
+    <string name="load_weather_info_fail">Load weaher info failed!</string>
 </resources>
