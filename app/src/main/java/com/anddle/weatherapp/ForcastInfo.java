@@ -16,21 +16,27 @@ public class ForcastInfo {
 
             case 0:
                 this.iconResId = R.mipmap.ic_sunny_s;
+                break;
 
             case 1:
                 this.iconResId =  R.mipmap.ic_rainy_s;
+                break;
 
             case 2:
                 this.iconResId =  R.mipmap.ic_cloudy_s;
+                break;
 
             case 3:
                 this.iconResId =  R.mipmap.ic_fog_s;
+                break;
 
             case 4:
                 this.iconResId =  R.mipmap.ic_snow_s;
+                break;
 
             case 5:
                 this.iconResId =  R.mipmap.ic_sunny_cloudy_s;
+                break;
 
         }
     }
